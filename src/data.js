@@ -1,6 +1,7 @@
 export { getWeather };
 
 import { Weather } from "./weather.js";
+import { printScreen } from "./display.js";
 
 async function getWeather(location) {
   try {
@@ -84,6 +85,7 @@ function processWeatherData(response) {
 
   const weatherData = new Weather(dayOne, futureDays);
   console.log(weatherData);
+  printScreen(weatherData);
 }
 
 /*

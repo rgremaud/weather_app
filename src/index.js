@@ -1,10 +1,11 @@
 import { getWeather } from "./data.js";
+import { printScreen } from "./display.js";
 
-function formClick() { 
+function formClick() {
     const button = document.getElementById("submit")
 
     button.addEventListener("click", () => {
-        event.preventDefault(); 
+        event.preventDefault();
         const input = document.getElementById("location");
         getWeather(input.value)
     })
