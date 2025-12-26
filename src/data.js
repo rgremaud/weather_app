@@ -1,5 +1,7 @@
 export { getWeather };
 
+import { Weather } from "./weather.js";
+
 async function getWeather(location) {
   try {
     const response = await fetch(
@@ -25,37 +27,63 @@ function processWeatherData(response) {
   const description = response.description;
   const days = response.days;
 
+  const dayOne = new Map();
+  const futureDays = [];
+
   console.log("Location: " + location);
   console.log("Timezone: " + timezone);
   console.log("Description: " + description);
 
-
-// doesn't work - need to break out first day vs other days
   for (let i = 0; i < days.length; i++) {
-    if (i = 0) {
-    console.log(
+    if (i === 0) {
+      // console logs for testing
+      console.log(
+        days[i].datetime +
+        ": tempmax=" + days[i].tempmax +
+        ", tempmin=" + days[i].tempmin +
+        ", condition=" + days[i].conditions +
+        ", temp=" + days[i].temp +
+        ", feels like=" + days[i].feelslike +
+        ", dew=" + days[i].dew +
+        ", humidity=" + days[i].humidity +
+        ", conditions=" + days[i].conditions
+      )
+
+      // create hash map items
+      dayOne.set('date', days[i].datetime);
+      dayOne.set('tempMax', days[i].tempmax);
+      dayOne.set('tempMin', days[i].tempmin);
+      dayOne.set('condition', days[i].conditions);
+      dayOne.set('temp', days[i].temp);
+      dayOne.set('feelsLike', days[i].feelslike);
+      dayOne.set('dew', days[i].dew);
+      dayOne.set('humidity', days[i].humidity);
+      dayOne.set('conditions', days[i].conditions);
+
+    } else if (0 < i < days.length) {
+      // console log for tracking
+      console.log(
         days[i].datetime +
         ": tempmax=" +
         days[i].tempmax +
         ", tempmin=" +
         days[i].tempmin,
-      ", condition=" + days[i].conditions, + 
-      ", temp=" + days[i].temp,
-      ", feelslike=" + days[i].feelslike,
-      ", dew=" + days[i].dew,
-      ", humidity=" + days[i].humidity,
-      ", conditions=" + days[i].conditions
-    )
-    } else if (0 < i < days.length) { 
-    console.log(
-      days[i].datetime +
-        ": tempmax=" +
-        days[i].tempmax +
-        ", tempmin=" +
-        days[i].tempmin,
-      ", condition=" + days[i].conditions,
-    ); }
+        ", condition=" + days[i].conditions,
+      );
+
+      // create hash for each day and push onto futureDays
+      const day = new Map();
+      day.set('date', days[i].datetime);
+      day.set('tempMax', days[i].tempmax);
+      day.set('tempMin', days[i].tempmin);
+      day.set('condition', days[i].conditions);
+
+      futureDays.push(day);
+    }
   }
+
+  const weatherData = new Weather(dayOne, futureDays);
+  console.log(weatherData);
 }
 
 /*
