@@ -17,6 +17,6 @@ function printScreen(weatherData) {
     const currentDay = document.getElementById("currentDay");
     const futureDays = document.getElementById("futureDays");
 
-    currentDay.textContent = weatherData.currentDay;
-    futureDays.textContent = weatherData.futureDays;
+    weatherData.printCurrentDay(currentDay);
+    weatherData.printFutureDays(futureDays);
 }

@@ -1,5 +1,6 @@
 import { getWeather } from "./data.js";
 import { printScreen } from "./display.js";
+import { printData } from "./data.js";
 
 function formClick() {
     const button = document.getElementById("submit")
@@ -7,7 +8,8 @@ function formClick() {
     button.addEventListener("click", () => {
         event.preventDefault();
         const input = document.getElementById("location");
-        getWeather(input.value)
+        getWeather(input.value);
+        printData();
     })
 }
 

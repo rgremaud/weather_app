@@ -1,4 +1,5 @@
 export { getWeather };
+export { printData };
 
 import { Weather } from "./weather.js";
 import { printScreen } from "./display.js";
@@ -13,9 +14,10 @@ async function getWeather(location) {
     }
 
     const data = await response.json();
-
+    console.log(data);
+    // rework so this returns your object
     const formattedData = processWeatherData(data);
-
+    
     return formattedData;
   } catch (error) {
     console.error("Fetch error:", error);
@@ -27,30 +29,11 @@ function processWeatherData(response) {
   const timezone = response.timezone;
   const description = response.description;
   const days = response.days;
-
   const dayOne = new Map();
   const futureDays = [];
 
-  console.log("Location: " + location);
-  console.log("Timezone: " + timezone);
-  console.log("Description: " + description);
-
   for (let i = 0; i < days.length; i++) {
     if (i === 0) {
-      // console logs for testing
-      console.log(
-        days[i].datetime +
-        ": tempmax=" + days[i].tempmax +
-        ", tempmin=" + days[i].tempmin +
-        ", condition=" + days[i].conditions +
-        ", temp=" + days[i].temp +
-        ", feels like=" + days[i].feelslike +
-        ", dew=" + days[i].dew +
-        ", humidity=" + days[i].humidity +
-        ", conditions=" + days[i].conditions
-      )
-
-      // create hash map items
       dayOne.set('date', days[i].datetime);
       dayOne.set('tempMax', days[i].tempmax);
       dayOne.set('tempMin', days[i].tempmin);
@@ -62,17 +45,6 @@ function processWeatherData(response) {
       dayOne.set('conditions', days[i].conditions);
 
     } else if (0 < i < days.length) {
-      // console log for tracking
-      console.log(
-        days[i].datetime +
-        ": tempmax=" +
-        days[i].tempmax +
-        ", tempmin=" +
-        days[i].tempmin,
-        ", condition=" + days[i].conditions,
-      );
-
-      // create hash for each day and push onto futureDays
       const day = new Map();
       day.set('date', days[i].datetime);
       day.set('tempMax', days[i].tempmax);
@@ -83,9 +55,20 @@ function processWeatherData(response) {
     }
   }
 
-  const weatherData = new Weather(dayOne, futureDays);
-  console.log(weatherData);
-  printScreen(weatherData);
+  const weatherData = new Weather(location, timezone, description, dayOne, futureDays);
+  
+  return weatherData;
+}
+
+async function printData() {
+  try {
+    const result = await getWeather();
+    // console.log(result); 
+    const content = document.getElementById("display");
+    content.textContent = result.location;
+  } catch (error) {
+    console.error("An error occurred:", error);
+  }
 }
 
 /*
