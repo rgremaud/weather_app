@@ -14,10 +14,9 @@ async function getWeather(location) {
     }
 
     const data = await response.json();
-    console.log(data);
     // rework so this returns your object
     const formattedData = processWeatherData(data);
-    
+
     return formattedData;
   } catch (error) {
     console.error("Fetch error:", error);
@@ -37,7 +36,6 @@ function processWeatherData(response) {
       dayOne.set('date', days[i].datetime);
       dayOne.set('tempMax', days[i].tempmax);
       dayOne.set('tempMin', days[i].tempmin);
-      dayOne.set('condition', days[i].conditions);
       dayOne.set('temp', days[i].temp);
       dayOne.set('feelsLike', days[i].feelslike);
       dayOne.set('dew', days[i].dew);
@@ -60,12 +58,43 @@ function processWeatherData(response) {
   return weatherData;
 }
 
-async function printData() {
+async function printData(location) {
   try {
-    const result = await getWeather();
-    // console.log(result); 
+    const result = await getWeather(location);
+    console.log(result); 
+    const currentDayData = result.currentDay
+    
     const content = document.getElementById("display");
-    content.textContent = result.location;
+    // create header divs
+    const searchItem = document.createElement("div");
+    searchItem.textContent = "Location: " + result.location;
+
+    const timezone = document.createElement("div");
+    timezone.textContent = "Timezone: " + result.timezone;
+
+    const description = document.createElement("div");
+    description.textContent = "Description: " + result.description;
+
+    const currentDay = document.createElement("div");
+
+    // testing iterating over currentDayData
+    for (const [key, value] of currentDayData) {
+        const entry = document.createElement("div");
+        entry.textContent = `${key}: ${value}`
+
+        currentDay.appendChild(entry);
+    }
+    
+    
+    // const futureDays = document.createElement("div");
+    // futureDays.textContent = result.futureDays;
+
+    content.appendChild(searchItem);
+    content.appendChild(timezone);
+    content.appendChild(description);
+    content.appendChild(currentDay);
+    // content.appendChild(futureDays);
+
   } catch (error) {
     console.error("An error occurred:", error);
   }

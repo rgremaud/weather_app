@@ -8,8 +8,7 @@ function formClick() {
     button.addEventListener("click", () => {
         event.preventDefault();
         const input = document.getElementById("location");
-        getWeather(input.value);
-        printData();
+        printData(input.value);
     })
 }
 
