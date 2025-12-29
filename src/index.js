@@ -1,14 +1,16 @@
-import { getWeather } from "./data.js";
-import { printScreen } from "./display.js";
 import { printData } from "./data.js";
 
 function formClick() {
     const button = document.getElementById("submit")
 
     button.addEventListener("click", () => {
+        // const content = document.getElementById("content");
+        // content.innerHTML = "";
+
         event.preventDefault();
         const input = document.getElementById("location");
         printData(input.value);
+        input.value = "";
     })
 }
 

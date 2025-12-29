@@ -2,7 +2,6 @@ export { getWeather };
 export { printData };
 
 import { Weather } from "./weather.js";
-import { printScreen } from "./display.js";
 
 async function getWeather(location) {
   try {
@@ -62,39 +61,19 @@ async function printData(location) {
   try {
     const result = await getWeather(location);
     console.log(result); 
-    const currentDayData = result.currentDay
     
-    const content = document.getElementById("display");
-    // create header divs
-    const searchItem = document.createElement("div");
-    searchItem.textContent = "Location: " + result.location;
-
-    const timezone = document.createElement("div");
-    timezone.textContent = "Timezone: " + result.timezone;
-
-    const description = document.createElement("div");
-    description.textContent = "Description: " + result.description;
-
-    const currentDay = document.createElement("div");
-
-    // testing iterating over currentDayData
-    for (const [key, value] of currentDayData) {
-        const entry = document.createElement("div");
-        entry.textContent = `${key}: ${value}`
-
-        currentDay.appendChild(entry);
-    }
+    // create location details divs
+    const locationDetails = document.getElementById("locationDetails");
+    result.printHeaderData(locationDetails);
     
+    // create current day divs
+    const currentDay = document.getElementById("currentDay");
+    result.printCurrentDay(currentDay);
     
-    // const futureDays = document.createElement("div");
-    // futureDays.textContent = result.futureDays;
-
-    content.appendChild(searchItem);
-    content.appendChild(timezone);
-    content.appendChild(description);
-    content.appendChild(currentDay);
-    // content.appendChild(futureDays);
-
+    // Print future day data to page
+    const futureDays = document.getElementById("futureDays")
+    result.printFutureDays(futureDays);
+    
   } catch (error) {
     console.error("An error occurred:", error);
   }
