@@ -1,0 +1,31 @@
+@import url('https://fonts.googleapis.com/css2?family=Vend+Sans:ital,wght@0,300..700;1,300..700&display=swap');
+
+body {
+    font-family: "Vend Sans", sans-serif;
+    font-optical-sizing: auto;
+    font-weight: 300;
+    font-style: normal;
+    /* display: flex;
+    flex-direction: column;
+    align-items: center; */
+}
+
+#currentDay {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+}
+
+#display {
+    height: 100%;
+    width: 50%;
+    display: flex;
+    flex-direction: column;
+}
+
+#currentDay {
+    height: 20vh;
+}
+
+#bigTemp {
+    font-size: 7.5rem;
+}

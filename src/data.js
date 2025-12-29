@@ -53,53 +53,28 @@ function processWeatherData(response) {
   }
 
   const weatherData = new Weather(location, timezone, description, dayOne, futureDays);
-  
+
   return weatherData;
 }
 
 async function printData(location) {
   try {
     const result = await getWeather(location);
-    console.log(result); 
-    
+    console.log(result);
+
     // create location details divs
     const locationDetails = document.getElementById("locationDetails");
     result.printHeaderData(locationDetails);
-    
+
     // create current day divs
     const currentDay = document.getElementById("currentDay");
-    result.printCurrentDay(currentDay);
-    
+    result.printCurrentDayTest(currentDay);
+
     // Print future day data to page
     const futureDays = document.getElementById("futureDays")
     result.printFutureDays(futureDays);
-    
+
   } catch (error) {
     console.error("An error occurred:", error);
   }
 }
-
-/*
-Data needed
-
-Location:
-  "address": "cary",
-  "timezone": "America/New_York",
-  "description": "Cooling down with no rain expected.",
-
-Current day:
-    "tempmax": 65,
-    "tempmin": 41,
-    "temp": 50.2,
-    "feelslike": 47.9,
-    "dew": 34.3,
-    "humidity": 55.1,
-    "conditions": "Partially cloudy",
-
-10 day:
-show next 10 days:
-    "tempmax": 65,
-    "tempmin": 41
-    "conditions": "Partially cloudy",,
-
-*/

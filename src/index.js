@@ -1,3 +1,7 @@
+// index.js
+import "./reset.css";
+import "./styles.css";
+
 import { printData } from "./data.js";
 
 function formClick() {
@@ -17,9 +21,9 @@ function formClick() {
         futureWeather.textContent = "";
 
         // build new titles
-        buildTitle(locationDetails, "Location Details:");
-        buildTitle(currentWeather, "Current Weather:");
-        buildTitle(futureWeather, "Future Weather:");
+        // buildTitle(locationDetails, "Location");
+        // buildTitle(currentWeather, "Current");
+        buildTitle(futureWeather, "Future");
 
         // pull data
         const input = document.getElementById("location");
@@ -29,7 +33,7 @@ function formClick() {
 }
 
 function buildTitle(parentDiv, titleText) {
-    const title = document.createElement("h3");
+    const title = document.createElement("h1");
     title.textContent = titleText
 
     parentDiv.appendChild(title);
