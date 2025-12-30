@@ -11,11 +11,13 @@ console.log(dayNames[day]); // "Monday"
 export { getDay }
 
 function getDay(jsonDate) {
-  const date = new Date(jsonDate);
-  const index = date.getDay();
-  const dayNames = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
+    const date = new Date(jsonDate);
+    const dayOfMonth = date.getDate();
+    const index = date.getDay();
+    const dayNames = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
 
-  const number = dayNames[index];
+    const dayOfWeek = dayNames[index];
 
-  return number;
+    const formattedDate = dayOfWeek + " " + dayOfMonth;
+    return formattedDate;
 }
