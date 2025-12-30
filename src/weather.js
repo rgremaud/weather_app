@@ -1,87 +1,104 @@
 export { Weather };
 
+import { getDay } from "./display.js"
+
 class Weather {
-    constructor(location, timezone, description, currentDay, futureDays) {
-        this.location = location;
-        this.timezone = timezone;
-        this.description = description;
-        this.currentDay = currentDay;
-        this.futureDays = futureDays;
-    }
+  constructor(location, timezone, description, currentDay, futureDays) {
+    this.location = location;
+    this.timezone = timezone;
+    this.description = description;
+    this.currentDay = currentDay;
+    this.futureDays = futureDays;
+  }
 
-    printCurrentDay(parentDiv) {
-        const dayDiv = document.createElement("div");
+  printCurrentDay(parentDiv) {
+    const currentDayDiv = document.getElementById("currentDay");
 
-        for (const [key, value] of this.currentDay) {
-            const entry = document.createElement("div");
-            entry.textContent = `${key}: ${value}`
+    const bigTemp = document.createElement("div");
+    bigTemp.id = "bigTemp";
+    bigTemp.textContent = this.currentDay.get("temp") + "°";
 
-            dayDiv.appendChild(entry);
+    const details = document.createElement("div");
+    details.id = "currentDetails";
+
+    // create divs / content for right hand box items
+    this.buildLine("date ", this.currentDay.get("date"), details);
+    this.buildLine(
+      "feels like ",
+      this.currentDay.get("feelsLike") + "°",
+      details,
+    );
+    this.buildLine("high ", this.currentDay.get("tempMax") + "°", details);
+    this.buildLine("low ", this.currentDay.get("tempMin") + "°", details);
+    this.buildLine("dew ", this.currentDay.get("dew") + "°", details);
+    this.buildLine("humidity ", this.currentDay.get("humidity") + "%", details);
+
+    parentDiv.appendChild(bigTemp);
+    parentDiv.appendChild(details);
+  }
+
+  buildLine(firstPartText, secondPartText, parentDiv) {
+    const line = document.createElement("div");
+    line.className = "currentWeatherLine";
+
+    const firstPartDiv = document.createElement("div");
+    firstPartDiv.textContent = firstPartText;
+    firstPartDiv.className = "firstPart";
+
+    const secondPartDiv = document.createElement("div");
+    secondPartDiv.textContent = secondPartText;
+    secondPartDiv.className = "secondPart";
+
+    line.appendChild(firstPartDiv);
+    line.appendChild(secondPartDiv);
+
+    parentDiv.appendChild(line);
+  }
+
+  printFutureDays(parentDiv) {
+    const tenDayForecast = document.createElement("div");
+    tenDayForecast.id = "tenDay";
+
+    /*
+{"date" => "2025-12-30"}
+{"tempMax" => 42}
+{"tempMin" => 27}
+{"condition" => "Clear"}
+    */
+    this.futureDays.forEach((day) => {
+      if (this.futureDays.indexOf(day) <= 9) {
+        const newDay = document.createElement("div");
+        newDay.className = "day"
+        // // expirimenting w/formatting
+        // const date = document.createElement("div")
+        
+        // date.textContent = getDay(day.get("date"));
+
+        for (const [key, value] of day) {
+          const entry = document.createElement("div");
+          entry.textContent = `${value}`;
+
+          newDay.appendChild(entry);
         }
-        parentDiv.appendChild(dayDiv);
-    }
+        tenDayForecast.appendChild(newDay);
+      }
+    });
 
-    printCurrentDayTest(parentDiv) {
-        /* rework as follows: (anything in single quotes is key)
-           Current - 'date'
-           left hand side: 
-           'temp' as large number degrees.  show F / C next w/option to convert between two 
-           right hand side:
-           'date'
-           'feelsLike'
-           'tempMax'
-           'tempMin'
-           'dew'
-           'humidity'
-           
-       */
-        const currentDayDiv = document.getElementById("currentDay");
+    parentDiv.appendChild(tenDayForecast);
+  }
 
-        const bigTemp = document.createElement("div");
-        bigTemp.id = "bigTemp";
-        bigTemp.textContent = this.currentDay.get('temp') + "°";
+  printHeaderData(parentDiv) {
+    const locationSearch = document.createElement("h1");
+    locationSearch.textContent = this.location;
 
-        const details = document.createElement("div")
-        details.id = "currentDetails";
+    // const timezone = document.createElement("div");
+    // timezone.textContent = "Timezone: " + this.timezone;
 
-        for (const [key, value] of this.currentDay) {
-            if (key !== 'date') {
-                const entry = document.createElement("div");
-                entry.textContent = `${value}`
+    // const description = document.createElement("div");
+    // description.textContent = "Description: " + this.description;
 
-                details.appendChild(entry);
-            }
-        }
-
-        parentDiv.appendChild(bigTemp);
-        parentDiv.appendChild(details);
-    }
-
-    printFutureDays(parentDiv) {
-        this.futureDays.forEach((day) => {
-            const newDay = document.createElement("div");
-            for (const [key, value] of day) {
-                const entry = document.createElement("div");
-                entry.textContent = `${key}: ${value}`
-
-                newDay.appendChild(entry);
-            }
-            parentDiv.appendChild(newDay);
-        })
-    }
-
-    printHeaderData(parentDiv) {
-        const locationSearch = document.createElement("h1");
-        locationSearch.textContent = this.location;
-
-        // const timezone = document.createElement("div");
-        // timezone.textContent = "Timezone: " + this.timezone;
-
-        // const description = document.createElement("div");
-        // description.textContent = "Description: " + this.description;
-
-        parentDiv.appendChild(locationSearch);
-        // parentDiv.appendChild(timezone);
-        // parentDiv.appendChild(description);
-    }
+    parentDiv.appendChild(locationSearch);
+    // parentDiv.appendChild(timezone);
+    // parentDiv.appendChild(description);
+  }
 }

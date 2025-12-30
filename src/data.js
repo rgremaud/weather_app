@@ -32,27 +32,32 @@ function processWeatherData(response) {
 
   for (let i = 0; i < days.length; i++) {
     if (i === 0) {
-      dayOne.set('date', days[i].datetime);
-      dayOne.set('tempMax', days[i].tempmax);
-      dayOne.set('tempMin', days[i].tempmin);
-      dayOne.set('temp', days[i].temp);
-      dayOne.set('feelsLike', days[i].feelslike);
-      dayOne.set('dew', days[i].dew);
-      dayOne.set('humidity', days[i].humidity);
-      dayOne.set('conditions', days[i].conditions);
-
+      dayOne.set("date", days[i].datetime);
+      dayOne.set("tempMax", days[i].tempmax);
+      dayOne.set("tempMin", days[i].tempmin);
+      dayOne.set("temp", days[i].temp);
+      dayOne.set("feelsLike", days[i].feelslike);
+      dayOne.set("dew", days[i].dew);
+      dayOne.set("humidity", days[i].humidity);
+      dayOne.set("conditions", days[i].conditions);
     } else if (0 < i < days.length) {
       const day = new Map();
-      day.set('date', days[i].datetime);
-      day.set('tempMax', days[i].tempmax);
-      day.set('tempMin', days[i].tempmin);
-      day.set('condition', days[i].conditions);
+      day.set("date", days[i].datetime);
+      day.set("tempMax", days[i].tempmax);
+      day.set("tempMin", days[i].tempmin);
+      day.set("condition", days[i].conditions);
 
       futureDays.push(day);
     }
   }
 
-  const weatherData = new Weather(location, timezone, description, dayOne, futureDays);
+  const weatherData = new Weather(
+    location,
+    timezone,
+    description,
+    dayOne,
+    futureDays,
+  );
 
   return weatherData;
 }
@@ -68,12 +73,11 @@ async function printData(location) {
 
     // create current day divs
     const currentDay = document.getElementById("currentDay");
-    result.printCurrentDayTest(currentDay);
+    result.printCurrentDay(currentDay);
 
     // Print future day data to page
-    const futureDays = document.getElementById("futureDays")
+    const futureDays = document.getElementById("futureDays");
     result.printFutureDays(futureDays);
-
   } catch (error) {
     console.error("An error occurred:", error);
   }
