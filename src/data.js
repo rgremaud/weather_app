@@ -18,7 +18,6 @@ async function getWeather(location) {
 
     return formattedData;
   } catch (error) {
-    // console.error("Fetch error:", error);
     alert("Invalid location.  Please try again!");
   }
 }
