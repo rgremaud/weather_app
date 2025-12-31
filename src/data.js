@@ -2,6 +2,7 @@ export { getWeather };
 export { printData };
 
 import { Weather } from "./weather.js";
+import { printCurrentDay, printFutureDays, printHeaderData } from "./display.js";
 
 async function getWeather(location) {
   try {
@@ -69,15 +70,15 @@ async function printData(location) {
 
     // create location details divs
     const locationDetails = document.getElementById("locationDetails");
-    result.printHeaderData(locationDetails);
+    printHeaderData(locationDetails, result);
 
     // create current day divs
     const currentDay = document.getElementById("currentDay");
-    result.printCurrentDay(currentDay);
+    printCurrentDay(currentDay, result);
 
     // Print future day data to page
     const futureDays = document.getElementById("futureDays");
-    result.printFutureDays(futureDays);
+    printFutureDays(futureDays, result);
   } catch (error) {
     console.error("An error occurred:", error);
   }

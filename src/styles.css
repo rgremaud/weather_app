@@ -8,6 +8,10 @@ body {
   margin: 2vh 2vw;
 }
 
+form > * {
+  font-size: 1.2rem;
+}
+
 #currentDay {
   display: grid;
   grid-template-columns: 1fr 1fr;
