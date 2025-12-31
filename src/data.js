@@ -14,12 +14,12 @@ async function getWeather(location) {
     }
 
     const data = await response.json();
-    // rework so this returns your object
     const formattedData = processWeatherData(data);
 
     return formattedData;
   } catch (error) {
-    console.error("Fetch error:", error);
+    // console.error("Fetch error:", error);
+    alert("Invalid location.  Please try again!");
   }
 }
 

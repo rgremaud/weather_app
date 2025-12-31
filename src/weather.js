@@ -8,5 +8,4 @@ class Weather {
     this.currentDay = currentDay;
     this.futureDays = futureDays;
   }
-
 }

@@ -20,9 +20,6 @@ function formClick() {
     currentWeather.textContent = "";
     futureWeather.textContent = "";
 
-    // build new titles
-    // buildTitle(locationDetails, "Location");
-    // buildTitle(currentWeather, "Current");
     buildTitle(futureWeather, "10-Day Weather Forecast");
 
     // pull data
